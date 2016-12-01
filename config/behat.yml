@@ -1,0 +1,39 @@
+## YAML Template.
+---
+# rml.behat.yml
+default:
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      default_session: selenium2
+      browser_name: firefox
+      selenium2:
+        capabilities:
+          browser:      firefox
+          browserName:  firefox
+          version:      ""
+        wd_host:        'http://127.0.0.1:4444/wd/hub'
+      base_url:         'https://en.wikipedia.org/wiki/Main_Page'
+    Drupal\DrupalExtension:
+      blackbox: ~
+      region_map:
+  autoload:
+        '': %paths.base%/../features/bootstrap  
+  suites:
+    login:
+      paths:
+        - %paths.base%/../features/login
+      contexts:
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - FeatureContext
+      filters: 
+        tags: login-with-invalid
+    order:
+      paths:
+        - %paths.base%/../features/order
+      contexts:
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - FeatureContext
+        
